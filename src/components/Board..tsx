@@ -60,6 +60,7 @@ const Board = () => {
         <Box sx={contentSx}>
           <ReactMarkdown>{route.description}</ReactMarkdown>
         </Box>
+        <Box sx={backgroundSx} />
       </Paper>
     </Container>
   );
@@ -78,11 +79,25 @@ const rootSx: SxProps<Theme> = {
 };
 
 const paperSx: SxProps<Theme> = {
-  // height: "100%",
+  position: "relative",
   height: "80vh",
   display: "flex",
   flexDirection: "column",
 };
+
+const backgroundSx: SxProps<Theme> = {
+  position: "absolute",
+  bottom: "5%",
+  right: "5%",
+  width: 192,
+  height: 192,
+  filter: "invert(1)",
+  opacity: 0.15,
+  pointerEvents: 'none',
+  backgroundImage: "url(/android-chrome-192x192.png)",
+  backgroundRepeat: "no-repeat",
+  backgroundBlendMode: "difference",
+}
 
 const titleSx: SxProps<Theme> = {
   display: "flex",

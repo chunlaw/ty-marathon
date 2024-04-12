@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import AppLayout from "./layouts/AppLayout";
+import AppLayout from "./components/layouts/AppLayout";
 import Board from "./components/Board.";
-import MapPage from "./components/pages/MapPage";
+import MapPage from "./pages/MapPage";
 
 const App = (): React.ReactNode => {
   return (

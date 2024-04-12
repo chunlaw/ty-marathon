@@ -8,9 +8,10 @@ import {
   useMap,
 } from "react-leaflet";
 import { Box, SxProps, Theme } from "@mui/material";
-import AppContext from "../../context/AppContext";
+import AppContext from "../context/AppContext";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Outlet, useNavigate } from "react-router-dom";
+import OverlayTextLogo from "../components/layouts/OverlayTextLogo";
 
 export default function MapPage() {
   const {
@@ -80,6 +81,7 @@ export default function MapPage() {
         <ChangeView />
       </MapContainer>
       <Outlet />
+      <OverlayTextLogo />
     </Box>
   );
 }
