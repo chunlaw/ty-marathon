@@ -111,11 +111,11 @@ export default Board;
 
 const rootSx: SxProps<Theme> = {
   position: "fixed",
-  top: (t) => t.spacing(8),
+  top: (t) => t.spacing(4),
   left: (t) => t.spacing(8),
   zIndex: 1000,
   "@media (max-width: 500px)": {
-    width: "80%",
+    width: "90%",
   },
 };
 

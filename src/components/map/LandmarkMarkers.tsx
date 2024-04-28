@@ -1,12 +1,13 @@
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Marker, Tooltip } from "react-leaflet";
 import { Box, SxProps, Theme, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DbContext from "../../context/DbContext";
 
 const LandmarkMarkers = () => {
   const { routes, landmarks } = useContext(DbContext);
+  const { routeId } = useParams()
   const navigate = useNavigate();
   const handleClick = useCallback(
     (landmark: string) => {
@@ -20,6 +21,12 @@ const LandmarkMarkers = () => {
     [navigate, routes]
   );
 
+  const availableLandmarks = useMemo(() => {
+    const route = routes.filter( ({name}) => name === routeId )[0]
+    if ( !route ) return landmarks
+    return landmarks.filter(({name}) => route.landmarks.includes(name))
+  }, [routes, routeId, landmarks])
+
   return (
     <MarkerClusterGroup
       chunkedLoading
@@ -29,7 +36,7 @@ const LandmarkMarkers = () => {
         fillOpacity: 0.3,
       }}
     >
-      {landmarks.map(({ name, coordinate }) => (
+      {availableLandmarks.map(({ name, coordinate }) => (
         <Marker
           key={name}
           position={coordinate}

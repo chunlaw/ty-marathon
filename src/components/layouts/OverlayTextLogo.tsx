@@ -15,9 +15,9 @@ const rootSx: SxProps<Theme> = {
   pointerEvents: "none",
   bottom: 0,
   right: 0,
-  mb: 4,
-  mr: 8,
-  zIndex: 100000,
+  mb: 8,
+  mr: 4,
+  zIndex: 1000,
   color: "gray",
   opacity: 0.4,
 };

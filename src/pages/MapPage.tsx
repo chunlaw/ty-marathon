@@ -23,12 +23,13 @@ export default function MapPage() {
 
   return (
     <Box sx={rootSx}>
+      <OverlayTextLogo />
       <MapContainer
         center={DEFAULT_MAP_VIEW.center}
         zoom={DEFAULT_MAP_VIEW.zoom}
         scrollWheelZoom={true}
         zoomControl={false}
-        style={{ height: "100%" }}
+        style={{ height: "100dvh" }}
         ref={mapRef}
       >
         <TileLayer
@@ -41,13 +42,12 @@ export default function MapPage() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png"
         />
-        <ZoomControl position="bottomright" />
+        <ZoomControl position="topright" />
         <RouteLine />
         <LandmarkMarkers />
       </MapContainer>
       <RoutePickers />
       <Outlet />
-      <OverlayTextLogo />
     </Box>
   );
 }

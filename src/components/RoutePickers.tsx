@@ -64,7 +64,7 @@ const RoutePickers = () => {
 const fabContainer: SxProps<Theme> = {
   position: "fixed",
   bottom: (t) => t.spacing(2),
-  left: (t) => t.spacing(4),
+  left: (t) => t.spacing(2),
   zIndex: 10000,
   display: "flex",
   gap: 2,
