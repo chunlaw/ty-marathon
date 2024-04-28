@@ -5,6 +5,7 @@ import "./index.css";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { AppContextProvider } from "./context/AppContext";
 import { BrowserRouter } from "react-router-dom";
+import { DbContextProvider } from "./context/DbContext.tsx";
 
 const theme = createTheme({
   typography: {
@@ -20,16 +21,18 @@ const theme = createTheme({
       '"Apple Color Emoji"',
     ].join(","),
   },
-})
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <DbContextProvider>
         <AppContextProvider>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </AppContextProvider>
-        </BrowserRouter>
+      </DbContextProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

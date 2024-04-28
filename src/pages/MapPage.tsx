@@ -1,38 +1,20 @@
-import { useCallback, useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Leaflet from "leaflet";
-import {
-  MapContainer,
-  TileLayer,
-  Polyline,
-  ZoomControl,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import { Box, SxProps, Theme } from "@mui/material";
-import AppContext from "../context/AppContext";
-import MarkerClusterGroup from "react-leaflet-cluster";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import OverlayTextLogo from "../components/layouts/OverlayTextLogo";
+import RouteLine from "../components/map/RouteLine";
+import LandmarkMarkers from "../components/map/LandmarkMarkers";
+import RoutePickers from "../components/RoutePickers";
 
 export default function MapPage() {
-  const {
-    routes,
-    map: { center, zoom },
-  } = useContext(AppContext);
-  const navigate = useNavigate();
-  const mapRef = useRef<any>(null);
-
-  const handleClick = useCallback(
-    (name: string) => () => {
-      navigate(`/map/${encodeURI(name)}`);
-    },
-    [navigate]
-  );
-
-  const handleResize = useCallback(() => {
-    mapRef.current?.invalidateSize();
-  }, []);
+  const mapRef = useRef<Leaflet.Map | null>(null);
 
   useEffect(() => {
+    const handleResize = () => {
+      mapRef.current?.invalidateSize();
+    };
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -42,8 +24,8 @@ export default function MapPage() {
   return (
     <Box sx={rootSx}>
       <MapContainer
-        center={center}
-        zoom={zoom}
+        center={DEFAULT_MAP_VIEW.center}
+        zoom={DEFAULT_MAP_VIEW.zoom}
         scrollWheelZoom={true}
         zoomControl={false}
         style={{ height: "100%" }}
@@ -60,42 +42,25 @@ export default function MapPage() {
           url="https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png"
         />
         <ZoomControl position="bottomright" />
-        <MarkerClusterGroup
-          chunkedLoading
-          polygonOptions={{
-            fillColor: "#006",
-            color: "transparent",
-            fillOpacity: 0.3,
-          }}
-        >
-          {routes.map(({coordinates, name}) => (
-            <Polyline
-              key={`route-${name}`}
-              positions={coordinates.map(({lat, lng}) => [lat, lng])}
-              eventHandlers={{
-                click: handleClick(name)
-              }}
-            />
-          ))} 
-        </MarkerClusterGroup>
-        <ChangeView />
+        <RouteLine />
+        <LandmarkMarkers />
       </MapContainer>
+      <RoutePickers />
       <Outlet />
       <OverlayTextLogo />
     </Box>
   );
 }
 
-const ChangeView = () => {
-  const {
-    map: { center, zoom },
-  } = useContext(AppContext);
-  const map = useMap();
-  map.setView(center, zoom);
-  return null;
-};
-
 const rootSx: SxProps<Theme> = {
   overflow: "clip",
   flex: 1,
+};
+
+const DEFAULT_MAP_VIEW = {
+  center: {
+    lat: 22.345983,
+    lng: 114.102759,
+  },
+  zoom: 14,
 };
