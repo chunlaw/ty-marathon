@@ -3,14 +3,16 @@ export interface Coordinate {
   lng: number;
 }
 
+export interface Landmark {
+  name: string;
+  description: string;
+  coordinate: Coordinate;
+}
+
 export interface Route {
   name: string;
   description: string;
   coordinates: Coordinate[];
-}
-
-export interface Route {
-  id: string;
-  entries: string[];
+  landmarks: string[];
 }
 

@@ -1,19 +1,11 @@
-import React, { ReactNode, useState, useCallback } from "react";
-import { Coordinate, Route } from "../data";
-import routes from "../routes.json"
+import React, { ReactNode, useState, useCallback, useMemo } from "react";
 
 interface AppContextState {
-  searchString: string;
-  map: {
-    center: Coordinate;
-    zoom: number;
-  };
+  hoverRouteId: string;
 }
 
 interface AppContextValue extends AppContextState {
-  routes: Route[];
-  setSearchString: (searchString: string) => void;
-  setRoute: (route: string) => void;
+  setHoverRouteId: (routeId: string) => void;
 }
 
 const AppContext = React.createContext({} as AppContextValue);
@@ -25,47 +17,28 @@ interface AppContextProviderProps {
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const [state, setState] = useState<AppContextState>(DEFAULT_STATE);
 
-  const setSearchString = useCallback(
-    (searchString: string) => {
-      setState((prev) => ({
-        ...prev,
-        searchString,
-      }));
-    },
-    [setState]
-  );
-
-  const setRoute = useCallback((route: string) => {
+  const setHoverRouteId = useCallback((hoverRouteId: string) => {
     setState((prev) => ({
       ...prev,
-      route,
+      hoverRouteId,
     }));
   }, []);
 
+  const contextValue: AppContextValue = useMemo(
+    () => ({
+      ...state,
+      setHoverRouteId,
+    }),
+    [state, setHoverRouteId]
+  );
+
   return (
-    <AppContext.Provider
-      value={{
-        ...state,
-        routes: routes as Route[],
-        setSearchString,
-        setRoute,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
   );
 };
 
 export default AppContext;
 
 const DEFAULT_STATE: AppContextState = {
-  searchString: "",
-  map: {
-    center: {
-      lat: 22.345983,
-      lng: 114.102759,
-    },
-    zoom: 14,
-  },
+  hoverRouteId: "",
 };
-

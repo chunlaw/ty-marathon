@@ -1,15 +1,14 @@
-import { Box, SxProps, Theme, Typography } from "@mui/material"
-
+import { Box, SxProps, Theme, Typography } from "@mui/material";
 
 const OverlayTextLogo = () => {
   return (
     <Box sx={rootSx}>
       <Typography variant="h2">青衣島民</Typography>
     </Box>
-  )
-}
+  );
+};
 
-export default OverlayTextLogo
+export default OverlayTextLogo;
 
 const rootSx: SxProps<Theme> = {
   position: "fixed",
@@ -21,4 +20,4 @@ const rootSx: SxProps<Theme> = {
   zIndex: 100000,
   color: "gray",
   opacity: 0.4,
-}
+};

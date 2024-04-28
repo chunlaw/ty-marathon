@@ -9,14 +9,14 @@ const App = (): React.ReactNode => {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route path="map" element={<MapPage />}>
-          <Route path=":routeId" element={<Board />} />
+        <Route path="map/:routeId?/:landmarkId?" element={<MapPage />}>
+          <Route index element={<Board />} />
         </Route>
       </Route>
       <Route index element={<DefaultRoute />} />
     </Routes>
   );
-}
+};
 
 export default App;
 
@@ -24,6 +24,6 @@ const DefaultRoute = () => {
   const navigate = useNavigate();
   useEffect(() => {
     navigate("/map");
-  }, []);
+  }, [navigate]);
   return <></>;
 };
