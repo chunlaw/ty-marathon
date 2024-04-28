@@ -7,7 +7,7 @@ import DbContext from "../../context/DbContext";
 
 const LandmarkMarkers = () => {
   const { routes, landmarks } = useContext(DbContext);
-  const { routeId } = useParams()
+  const { routeId } = useParams();
   const navigate = useNavigate();
   const handleClick = useCallback(
     (landmark: string) => {
@@ -22,10 +22,10 @@ const LandmarkMarkers = () => {
   );
 
   const availableLandmarks = useMemo(() => {
-    const route = routes.filter( ({name}) => name === routeId )[0]
-    if ( !route ) return landmarks
-    return landmarks.filter(({name}) => route.landmarks.includes(name))
-  }, [routes, routeId, landmarks])
+    const route = routes.filter(({ name }) => name === routeId)[0];
+    if (!route) return landmarks;
+    return landmarks.filter(({ name }) => route.landmarks.includes(name));
+  }, [routes, routeId, landmarks]);
 
   return (
     <MarkerClusterGroup

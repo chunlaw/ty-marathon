@@ -67,3 +67,11 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+* {
+  user-select: none;
+}
+
+p {
+  user-select: text;
+}

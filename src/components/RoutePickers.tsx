@@ -1,6 +1,6 @@
 import { Box, SxProps, Theme } from "@mui/material";
-import { useCallback, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useContext, useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import DbContext from "../context/DbContext";
 
@@ -10,6 +10,7 @@ interface RouteBtnProps {
 
 const RouteBtn = ({ name }: RouteBtnProps) => {
   const navigate = useNavigate();
+  const { routeId } = useParams();
   const { setHoverRouteId } = useContext(AppContext);
 
   const handleMouseEvt = useCallback(
@@ -23,10 +24,18 @@ const RouteBtn = ({ name }: RouteBtnProps) => {
     navigate(`/map/${encodeURI(name)}`);
   }, [name, navigate]);
 
+  const isMobile = useMemo(() => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  }, []);
+
   return (
     <Box
+      // @ts-expect-error combining multiple sx
       sx={{
         ...rootSx,
+        ...(isMobile ? { opacity: routeId === name ? 1 : 0.6 } : desktopSx),
         backgroundImage: `url(/routes/${encodeURI(name)}/logo.png)`,
       }}
       onMouseEnter={handleMouseEvt(name)}
@@ -44,6 +53,9 @@ const rootSx: SxProps<Theme> = {
   backgroundSize: "contain",
   cursor: "pointer",
   transition: "all 0.2s ease-in",
+};
+
+const desktopSx: SxProps<Theme> = {
   "&:hover": {
     width: 120,
     height: 120,
