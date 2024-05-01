@@ -1,5 +1,5 @@
 import { Box, SxProps, Theme } from "@mui/material";
-import { useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import DbContext from "../context/DbContext";
@@ -11,7 +11,7 @@ interface RouteBtnProps {
 const RouteBtn = ({ name }: RouteBtnProps) => {
   const navigate = useNavigate();
   const { routeId } = useParams();
-  const { setHoverRouteId } = useContext(AppContext);
+  const { isMobile, setHoverRouteId } = useContext(AppContext);
 
   const handleMouseEvt = useCallback(
     (v: string) => () => {
@@ -23,12 +23,6 @@ const RouteBtn = ({ name }: RouteBtnProps) => {
   const handleClick = useCallback(() => {
     navigate(`/map/${encodeURI(name)}`);
   }, [name, navigate]);
-
-  const isMobile = useMemo(() => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  }, []);
 
   return (
     <Box

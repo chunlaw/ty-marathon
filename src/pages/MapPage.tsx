@@ -4,9 +4,10 @@ import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import { Box, SxProps, Theme } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import OverlayTextLogo from "../components/layouts/OverlayTextLogo";
-import RouteLine from "../components/map/RouteLine";
+import RouteLines from "../components/map/RouteLines";
 import LandmarkMarkers from "../components/map/LandmarkMarkers";
 import RoutePickers from "../components/RoutePickers";
+import SelfCircle from "../components/map/SelfCircle";
 
 export default function MapPage() {
   const mapRef = useRef<Leaflet.Map | null>(null);
@@ -43,8 +44,9 @@ export default function MapPage() {
           url="https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png"
         />
         <ZoomControl position="topright" />
-        <RouteLine />
+        <RouteLines />
         <LandmarkMarkers />
+        <SelfCircle />
       </MapContainer>
       <RoutePickers />
       <Outlet />

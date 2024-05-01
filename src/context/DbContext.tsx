@@ -21,7 +21,7 @@ export const DbContextProvider = ({ children }: DbContextProviderProps) => {
 
   useEffect(() => {
     Promise.all(
-      routes.map(({ name, landmarks }) =>
+      routes.map(({ name, landmarks, color }) =>
         Promise.all([
           fetch(`/routes/${name}/route.gpx`).then((r) => r.text()),
           fetch(`/routes/${name}/description.md`).then((r) => r.text()),
@@ -36,6 +36,7 @@ export const DbContextProvider = ({ children }: DbContextProviderProps) => {
               lng: lon,
             })),
             landmarks,
+            color,
           };
         })
       )

@@ -11,6 +11,7 @@ export interface Landmark {
 
 export interface Route {
   name: string;
+  color: string;
   description: string;
   coordinates: Coordinate[];
   landmarks: string[];
